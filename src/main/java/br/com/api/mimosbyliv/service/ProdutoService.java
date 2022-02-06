@@ -15,10 +15,10 @@ import java.util.Optional;
 @Service
 public class ProdutoService {
     @Autowired
-    ProdutoRepository repository;
+    private ProdutoRepository repository;
 
     @Autowired
-    CategoriaRepository categoriaRepository;
+    private CategoriaRepository categoriaRepository;
 
     public List<Produto> getPorCategoria(Integer idCategoria) throws Exception{
         final List<Produto> allByCategoria = repository.findAllByCategoria(idCategoria);

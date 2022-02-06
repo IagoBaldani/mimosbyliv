@@ -31,11 +31,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
         Boolean valido = tokenService.isTokenValido(token);
 
         if(valido){
-            System.out.println("Token válido");
             autenticarCliente(token);
-        }
-        else{
-            System.out.println("Token inválido");
         }
 
         filterChain.doFilter(request, response);
