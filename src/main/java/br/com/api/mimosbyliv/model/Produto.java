@@ -16,6 +16,7 @@ public class Produto {
     private String urlImagem;
     private String descricao;
     private String status;
+    private String maisVendidos;
 
     public int getId() {
         return id;
@@ -64,5 +65,12 @@ public class Produto {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMaisVendidos() {
+        return maisVendidos;
+    }
+    public void setMaisVendidos(String maisVendidos) {
+        this.maisVendidos = maisVendidos;
     }
 }

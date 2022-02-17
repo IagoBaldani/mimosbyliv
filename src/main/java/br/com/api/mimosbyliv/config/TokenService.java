@@ -44,7 +44,6 @@ public class TokenService {
         catch (Exception e){
             return false;
         }
-
     }
 
     public Integer getIdUsuario(String token) {

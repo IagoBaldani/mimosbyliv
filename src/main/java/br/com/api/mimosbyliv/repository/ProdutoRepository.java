@@ -11,4 +11,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
     @Query(value = "SELECT * FROM Produto as p WHERE p.categoria_id = :idCategoria", nativeQuery = true)
     List<Produto> findAllByCategoria(@Param("idCategoria") Integer categoria);
+
+    @Query(value = "SELECT * FROM Produto as p WHERE p.mais_vendidos = 'S'", nativeQuery = true)
+    List<Produto> findMaisVendidos();
 }

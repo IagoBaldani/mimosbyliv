@@ -17,6 +17,7 @@ ProdutoDTO {
     private String tamanho;
     private String descricao;
     private String urlDaImagem;
+    private String maisVendidos;
 
     public BigDecimal getPreco() {
         return preco;
@@ -53,6 +54,13 @@ ProdutoDTO {
         this.urlDaImagem = urlDaImagem;
     }
 
+    public String getMaisVendidos() {
+        return maisVendidos;
+    }
+    public void setMaisVendidos(String maisVendidos) {
+        this.maisVendidos = maisVendidos;
+    }
+
     public Produto converte(CategoriaRepository categoriaRepository){
         Categoria categoria = categoriaRepository.findByNome(this.categoria);
         Produto produto = new Produto();
@@ -62,12 +70,13 @@ ProdutoDTO {
         produto.setPreco(this.preco);
         produto.setTamanhos(this.tamanho);
         produto.setUrlImagem(this.urlDaImagem);
+        produto.setMaisVendidos(this.maisVendidos);
         produto.setStatus("Disponível");
 
         return produto;
     }
 
-    public void atualizar(Integer id, ProdutoRepository repository, CategoriaRepository categoriaRepository) throws Exception {
+    public Produto atualizar(Integer id, ProdutoRepository repository, CategoriaRepository categoriaRepository) throws Exception {
         Optional<Produto> optProduto = repository.findById(id);
         Categoria categoria = categoriaRepository.findByNome(this.categoria);
 
@@ -79,11 +88,11 @@ ProdutoDTO {
             produto.setPreco(this.preco);
             produto.setTamanhos(this.tamanho);
             produto.setUrlImagem(this.urlDaImagem);
+            produto.setMaisVendidos(this.maisVendidos);
 
-            repository.save(produto);
+            return produto;
         }
-        else {
-            throw new NaoAchadoException("Não há nenhum produto cadastrado com este ID!");
-        }
+
+        throw new NaoAchadoException("Não há nenhum produto cadastrado com este ID!");
     }
 }

@@ -19,6 +19,8 @@ public class ProdutoController {
 
     private static final String NAO_ENCONTRADO_EXCEPTION = "br.com.api.mimosbyliv.exceptions.NaoAchadoException";
 
+    private static final String NULL_EXCEPTION = "java.lang.NullPointerException";
+
     @GetMapping("/produtos/{idCategoria}")
     public ResponseEntity retornaProdutosPorCategoria(@PathVariable Integer idCategoria){
         try{
@@ -26,7 +28,23 @@ public class ProdutoController {
             return ResponseEntity.ok().body(produtosAchados);
         }
         catch (Exception e){
-            if(e.getClass().getName().equals(NAO_ENCONTRADO_EXCEPTION)){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION)){
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+            return ResponseEntity.internalServerError().body(e);
+        }
+    }
+
+    @GetMapping("/produtos/mais-vendidos")
+    public ResponseEntity retornaProdutosMaisVendidos(){
+        try{
+            List<Produto> produtosAchados = service.getMaisVendidos();
+            return ResponseEntity.ok().body(produtosAchados);
+        }
+        catch (Exception e){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION)){
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
             return ResponseEntity.internalServerError().body(e);
@@ -40,7 +58,8 @@ public class ProdutoController {
             return ResponseEntity.ok().body(produto);
         }
         catch (Exception e){
-            if(e.getClass().getName().equals(NAO_ENCONTRADO_EXCEPTION)){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION)){
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
             return ResponseEntity.internalServerError().body(e);
@@ -54,6 +73,10 @@ public class ProdutoController {
             return ResponseEntity.ok().body("Produto cadastrado com sucesso!");
         }
         catch (Exception e){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION) || exceptionName.equals(NULL_EXCEPTION)){
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
             return ResponseEntity.internalServerError().body(e);
         }
     }
@@ -65,7 +88,8 @@ public class ProdutoController {
             return ResponseEntity.ok().body("Produto atualizado com sucesso!");
         }
         catch (Exception e){
-            if(e.getClass().getName().equals(NAO_ENCONTRADO_EXCEPTION)){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION) || exceptionName.equals(NULL_EXCEPTION)){
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
             return ResponseEntity.internalServerError().body(e);
@@ -79,7 +103,8 @@ public class ProdutoController {
             return ResponseEntity.ok().body("Status do produto atualizado com sucesso!");
         }
         catch (Exception e){
-            if(e.getClass().getName().equals(NAO_ENCONTRADO_EXCEPTION)){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION)){
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
             return ResponseEntity.internalServerError().body(e);
@@ -93,7 +118,8 @@ public class ProdutoController {
             return ResponseEntity.ok().body("Produto deletado com sucesso!");
         }
         catch (Exception e){
-            if(e.getClass().getName().equals(NAO_ENCONTRADO_EXCEPTION)){
+            String exceptionName = e.getClass().getName();
+            if(exceptionName.equals(NAO_ENCONTRADO_EXCEPTION)){
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
             return ResponseEntity.internalServerError().body(e);
