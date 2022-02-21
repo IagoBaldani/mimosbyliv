@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
-    @Query(value = "SELECT * FROM Produto as p WHERE p.categoria_id = :idCategoria", nativeQuery = true)
+    @Query(value = "SELECT * FROM Produto as p WHERE p.categoria_id = :idCategoria ORDER BY p.status", nativeQuery = true)
     List<Produto> findAllByCategoria(@Param("idCategoria") Integer categoria);
 
-    @Query(value = "SELECT * FROM Produto as p WHERE p.mais_vendidos = 'S'", nativeQuery = true)
+    @Query(value = "SELECT * FROM Produto as p WHERE p.mais_vendidos = 'S' ORDER BY p.status", nativeQuery = true)
     List<Produto> findMaisVendidos();
 }
